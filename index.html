@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feeding Hope - Ramadan Charity</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">Feedify</h1>
+            <button class="donate-btn-nav" onclick="scrollToDonate()">Donate Now</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <p class="tagline">Feeding Hope, Spreading Mercy.</p>
+            <h1 id="hero-headline">This Ramadan, Let’s Feed 9 Families in 2 Days</h1>
+            <p class="hero-sub" id="hero-subheadline">Loading data...</p>
+
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="progress-stats">
+                    <span id="raised-amount">Rs. 0 raised</span>
+                    <span id="target-amount">of Rs. 0</span>
+                </div>
+                <div class="remaining" id="remaining-amount">Rs. 0 Remaining</div>
+            </div>
+
+            <div class="countdown-timer" id="countdown">
+                <div><span id="days">00</span><small>Days</small></div>
+                <div><span id="hours">00</span><small>Hours</small></div>
+                <div><span id="minutes">00</span><small>Minutes</small></div>
+                <div><span id="seconds">00</span><small>Seconds</small></div>
+            </div>
+
+            <button class="cta-btn pulse" onclick="scrollToDonate()">Donate Now</button>
+        </div>
+    </header>
+
+    <!-- Phases Container -->
+    <main class="container" id="phases-container">
+        <!-- Content injected via script.js -->
+    </main>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="stats-grid" id="social-proof-grid">
+                <!-- Injected via script.js -->
+            </div>
+            <blockquote id="testimonial-placeholder"></blockquote>
+        </div>
+    </section>
+
+    <!-- Transparency -->
+    <section class="transparency">
+        <div class="container">
+            <h2>Transparency & Trust</h2>
+            <p id="transparency-text">Loading...</p>
+            <div class="trust-badges">
+                <span>Documentation</span> • <span>Visual Proof</span> • <span>Bank Transfers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bank Details Section -->
+    <section class="bank-section" id="bank-details-section">
+        <div class="container">
+            <h2>Direct Bank Transfer</h2>
+            <p>You can transfer donations directly to the following account:</p>
+
+            <div class="bank-card" style="position: relative;">
+                <button class="copy-all-btn" onclick="copyAllBankDetails()" title="Copy All Details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M8 17l-5-5 5-5m8-8l5 5-5 5M16 13l-5 5-5-5" />
+                    </svg> Copy All
+                </button>
+
+                <div class="bank-detail-item">
+                    <span class="bank-label">Bank Name:</span>
+                    <div class="value-group">
+                        <span class="bank-value" id="bank-name">Loading...</span>
+                        <button class="copy-icon-btn" onclick="copyText('bank-name')" title="Copy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <path d="M8 17l-5-5 5-5m8-8l5 5-5 5M16 13l-5 5-5-5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="bank-detail-item">
+                    <span class="bank-label">Account Holder:</span>
+                    <div class="value-group">
+                        <span class="bank-value" id="bank-holder">Loading...</span>
+                        <button class="copy-icon-btn" onclick="copyText('bank-holder')" title="Copy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="bank-detail-item">
+                    <span class="bank-label">Account Number:</span>
+                    <div class="value-group">
+                        <span class="bank-value" id="bank-number">Loading...</span>
+                        <button class="copy-icon-btn" onclick="copyText('bank-number')" title="Copy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="bank-detail-item">
+                    <span class="bank-label">IBAN:</span>
+                    <div class="value-group">
+                        <span class="bank-value" id="bank-iban">Loading...</span>
+                        <button class="copy-icon-btn" onclick="copyText('bank-iban')" title="Copy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="bank-detail-item" style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem;">
+                    <span class="bank-label">EasyPaisa / JazzCash:</span>
+                    <div class="value-group">
+                        <span class="bank-value" id="bank-mobile">Loading...</span>
+                        <button class="copy-icon-btn" onclick="copyText('bank-mobile')" title="Copy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inline WhatsApp Widget -->
+            <div style="margin-top: 2rem;">
+                <a href="#" id="floating-whatsapp" target="_blank" class="whatsapp-inline-btn">
+                    <div class="whatsapp-icon-inline">
+                        <svg viewBox="0 0 24 24" fill="white" width="24px" height="24px">
+                            <path
+                                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.698c1.005.549 1.961.839 3.106.839 3.182 0 5.768-2.587 5.769-5.766.001-3.185-2.584-5.768-5.769-5.768zm9.761 5.63c-.001 5.381-4.379 9.759-9.761 9.759-.001 0-.002-1.85-.002-1.85 0 0-1.7.001-2.5 0-.8 0-1.601-.25-2.302-.68l-4.729 1.241 1.266-4.591c-.496-.798-.771-1.68-.771-2.579-.001-5.38 4.378-9.758 9.759-9.758 5.381 0 9.76 4.379 9.76 9.758zm-9.761-7.75c-4.242 0-7.693 3.451-7.694 7.692 0 1.355.353 2.665.98 3.791l-.64 2.32 2.379-.625c1.077.585 2.307.915 3.575.915 4.243 0 7.694-3.451 7.694-7.692-.001-4.241-3.451-7.692-7.694-7.692z" />
+                        </svg>
+                    </div>
+                    <span>Got any questions? Chat with us</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Modal -->
+    <div class="modal-overlay" id="donate-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeDonateModal()">&times;</span>
+
+            <!-- Step 1: Select Phase -->
+            <div class="modal-step active" id="step-1">
+                <h2 class="step-title">Select Donation Phase</h2>
+                <div id="phase-select-container">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <!-- Step 2: Select Items -->
+            <div class="modal-step" id="step-2">
+                <h2 class="step-title">Select Items to Donate</h2>
+                <div id="items-checklist-container">
+                    <!-- Injected via JS -->
+                </div>
+                <div class="checklist-total">
+                    <span>Total Amount:</span>
+                    <span id="donation-total">Rs. 0</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="prevStep(1)">Back</button>
+                    <button class="btn-primary" onclick="nextStep(3)">Proceed to Pay</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment Details -->
+            <div class="modal-step" id="step-3">
+                <h2 class="step-title">Complete Your Donation</h2>
+                <p>Please transfer <strong><span id="final-total">Rs. 0</span></strong> to the account below and share
+                    the receipt.</p>
+
+                <div class="bank-card"
+                    style="margin: 1rem 0; padding: 1.5rem; box-shadow: none; border: 1px solid #ddd;">
+                    <div class="bank-detail-item">
+                        <span class="bank-label">Bank:</span>
+                        <span class="bank-value" id="modal-bank-name"></span>
+                    </div>
+                    <div class="bank-detail-item">
+                        <span class="bank-label">Account:</span>
+                        <span class="bank-value" id="modal-bank-number"></span>
+                    </div>
+                    <div class="bank-detail-item">
+                        <span class="bank-label">Title:</span>
+                        <span class="bank-value" id="modal-bank-holder"></span>
+                    </div>
+                    <div class="bank-detail-item">
+                        <span class="bank-label">Mobile:</span>
+                        <span class="bank-value" id="modal-bank-mobile"></span>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <p style="margin-bottom: 1rem;"><strong>Next Step:</strong> Send payment screenshot to:</p>
+                    <a href="#" id="whatsapp-link" target="_blank" class="cta-btn"
+                        style="text-decoration: none; font-size: 1rem; display: inline-block;">
+                        Share Receipt on WhatsApp
+                    </a>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="prevStep(2)">Back</button>
+                    <button class="btn-secondary" onclick="closeDonateModal()">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>Feedify</h3>
+            <p>Small Contributions. Big Impact.</p>
+            <p class="footer-note">© 2026 Feedify Initiative</p>
+        </div>
+    </footer>
+
+
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
