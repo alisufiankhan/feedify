@@ -8,7 +8,7 @@ const config = {
         headline: "This Ramadan, Let’s Feed 8 Families in 2 Days",
         subheadline: "We have already raised Rs. 57,500 out of Rs. 100,000 for our Rashan Drive. Help us complete the remaining target and deliver food within 48 hours.",
         target: 100000,
-        raised: 57500,
+        raised: 63500,
         currencySymbol: "Rs.",
         deadline: "2026-02-16T23:59:59" // 2 days from Feb 14th
     },
@@ -73,3 +73,4 @@ const config = {
 };
 
 if (typeof module !== 'undefined') module.exports = config;
+
