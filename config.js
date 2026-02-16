@@ -5,10 +5,10 @@ const config = {
         ramadanStartDate: "2026-02-18" // Estimated start of Ramadan 2026
     },
     hero: {
-        headline: "This Ramadan, Let’s Feed 8 Families in 2 Days",
-        subheadline: "We have already raised Rs. 63,600 out of Rs. 100,000 for our Rashan Drive. Help us complete the remaining target and deliver food within 48 hours.",
+        headline: "This Ramadan, Let’s Feed 8 Families in 1 Day",
+        subheadline: "We have already raised Rs. 64,000 out of Rs. 100,000 for our Rashan Drive. Help us complete the remaining target and deliver food within 48 hours.",
         target: 100000,
-        raised: 63600,
+        raised: 64000,
         currencySymbol: "Rs.",
         deadline: "2026-02-16T23:59:59" // 2 days from Feb 14th
     },
@@ -73,6 +73,7 @@ const config = {
 };
 
 if (typeof module !== 'undefined') module.exports = config;
+
 
 
 
