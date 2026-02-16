@@ -6,11 +6,11 @@ const config = {
     },
     hero: {
         headline: "This Ramadan, Let’s Feed 8 Families in 1 Day",
-        subheadline: "We have already raised Rs. 68,500 out of Rs. 100,000 for our Rashan Drive. Help us complete the remaining target and deliver food within 24 hours.",
+        subheadline: "We have already raised Rs. 73,500 out of Rs. 100,000 for our Rashan Drive. Help us complete the remaining target and deliver food within 24 hours.",
         target: 100000,
-        raised: 68500,
+        raised: 73500,
         currencySymbol: "Rs.",
-        deadline: "2026-02-16T23:59:59" // 2 days from Feb 14th
+        deadline: "2026-02-17T23:59:59" // 2 days from Feb 14th
     },
     phases: [
         {
@@ -73,6 +73,7 @@ const config = {
 };
 
 if (typeof module !== 'undefined') module.exports = config;
+
 
 
 
