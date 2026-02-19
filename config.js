@@ -10,7 +10,7 @@ const config = {
         target: 50000,
         raised: 1000,
         currencySymbol: "Rs.",
-        deadline: "2026-03-04T23:59:59" // 15 days from Feb 17th
+        deadline: "2026-03-06T23:59:59" // 15 days from Feb 17th
     },
     phases: [
         {
@@ -78,6 +78,7 @@ const config = {
 };
 
 if (typeof module !== 'undefined') module.exports = config;
+
 
 
 
