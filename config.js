@@ -1,23 +1,39 @@
 const config = {
     meta: {
         title: "Feedify - Ramadan Charity",
-        tagline: "Feeding Hope, Spreading Mercy.",
+        tagline: "Feeding Hope, Spreading Kindness.",
         ramadanStartDate: "2026-02-18" // Estimated start of Ramadan 2026
     },
     hero: {
-        headline: "This Ramadan, Let’s Feed 8 Families in 1 Day",
-        subheadline: "We have already raised Rs. 75,000 out of Rs. 100,000 for our Rashan Drive. Help us complete the remaining target and deliver food within 24 hours.",
-        target: 100000,
-        raised: 75000,
+        headline: "Help Us Host an Iftar for Orphans – Rs. 500 Per Meal",
+        subheadline: "We have 15 days to raise Rs. 50,000. Already raised Rs. 1,000. Join us in spreading kindness this Ramadan.",
+        target: 50000,
+        raised: 1000,
         currencySymbol: "Rs.",
-        deadline: "2026-02-18T23:59:59" // 2 days from Feb 14th
+        deadline: "2026-03-04T23:59:59" // 15 days from Feb 17th
     },
     phases: [
         {
+            id: "phase2",
+            title: "Phase 2 – Orphans Iftar",
+            goalDescription: "Orphanage Abbottabad - Iftar + Activities",
+            goalAmount: 50000,
+            raised: 1000,
+            label: "Current Priority — Help Us Reach 50k in 15 Days",
+            items: [
+                { name: "1 Iftar Meal", cost: 500, icon: "🍲" },
+                { name: "10 Orphans Meal", cost: 5000, icon: "👨‍👩‍👧‍👦" },
+                { name: "Sponsor Half Event", cost: 25000, icon: "🤝" },
+                { name: "Sponsor Full Event", cost: 50000, icon: "🎉" }
+            ]
+        },
+        {
             id: "phase1",
-            title: "Phase 1 – Rashan Distribution (Priority)",
+            title: "Phase 1 – Rashan Distribution",
             goalDescription: "8 Full Rashan Packages (Rs. 12,500/family)",
             goalAmount: 100000,
+            raised: 75000,
+            label: "Ongoing — We are still accepting donations for Rashan",
             items: [
                 { name: "Flour (10kg)", cost: 1650, icon: "🌾" },
                 { name: "Cooking Oil (5 packs)", cost: 2950, icon: "🍶" },
@@ -30,22 +46,11 @@ const config = {
             ]
         },
         {
-            id: "phase2",
-            title: "Phase 2 – Orphans Iftar (Upcoming)",
-            goalDescription: "Orphanage Abbottabad - Iftar + Activities",
-            goalAmount: 50000,
-            label: "Next Phase — Help Us Reach Here After Rashan Completion",
-            items: [
-                { name: "1 Iftar Meal", cost: 500, icon: "🍲" },
-                { name: "10 Orphans Meal", cost: 5000, icon: "👨‍👩‍👧‍👦" },
-                { name: "Sponsor Half Event", cost: 25000, icon: "🤝" },
-                { name: "Sponsor Full Event", cost: 50000, icon: "🎉" }
-            ]
-        },
-        {
             id: "phase3",
             title: "Phase 3 – Roadside Iftar Distribution",
             goalDescription: "Distributing Iftar boxes at Maghrib time",
+            goalAmount: 50000,
+            raised: 0,
             quote: "“Whoever provides the food for a fasting person to break his fast with, then for him is the same reward as his (the fasting person's), without anything being diminished from the reward of the fasting person.” (Jami' at-Tirmidhi 807)",
             items: [
                 { name: "1 Iftar Box", cost: 300, icon: "🍱" },

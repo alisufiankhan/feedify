@@ -1,0 +1,58 @@
+/* Hero Badges Stacked Hierarchy */
+.hero-badges {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem;
+}
+
+/* Phase 1 (Small Text) */
+.badge-progress {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    backdrop-filter: none;
+    font-size: 0.75rem;
+    /* Smaller text */
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.85);
+    /* Slightly muted white */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+    border-radius: 0;
+}
+
+.badge-progress:hover {
+    transform: none;
+    background: transparent;
+}
+
+.mini-progress-bar {
+    width: 50px;
+    height: 4px;
+    /* Thinner */
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.mini-progress-fill {
+    background: #4CAF50;
+    /* Keep green but flat */
+}
+
+/* Phase 2 (Heading Style) */
+.badge-phase {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    /* Heading size but not huge */
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 0.2rem;
+    text-transform: capitalize;
+    /* Or keep uppercase if preferred, user said "heading type text" */
+}

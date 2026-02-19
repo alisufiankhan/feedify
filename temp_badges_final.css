@@ -1,0 +1,45 @@
+/* FORCE PREMIUM STYLES FOR BADGE */
+.badge-progress {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    padding: 0.6rem 1.4rem !important;
+    border-radius: 50px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 0.85rem !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 0.8rem !important;
+    width: auto !important;
+    align-self: center !important;
+    transition: all 0.3s ease !important;
+    text-transform: none !important;
+}
+
+.badge-progress:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15)) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mini-progress-bar {
+    width: 60px !important;
+    height: 6px !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mini-progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.6) !important;
+}

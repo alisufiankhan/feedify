@@ -22,9 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('target-amount').textContent = `of ${formatCurrency(target)}`;
     document.getElementById('remaining-amount').textContent = `${formatCurrency(remaining)} Remaining`;
 
+    document.getElementById('remaining-amount').textContent = `${formatCurrency(remaining)} Remaining`;
+
     /* ------------------------------------------------------------- 
-       COUNTDOWN LOGIC 
+       HERO BADGE (Phase 1 Progress) 
+       "Still accepting donations for phase one (conclude on 1st roza)"
     ------------------------------------------------------------- */
+    const phase1 = config.phases.find(p => p.id === 'phase1');
+    if (phase1 && phase1.raised !== undefined) {
+        const p1Target = phase1.goalAmount;
+        const p1Raised = phase1.raised;
+        const p1Percent = Math.min((p1Raised / p1Target) * 100, 100);
+
+        const badgeHTML = `
+            <div class="mini-progress-bar">
+                <div class="mini-progress-fill" style="width: ${p1Percent}%"></div>
+            </div>
+            <span class="badge-text" style="font-size: 0.8rem;">
+                Phase 1: ${Math.round(p1Percent)}% Raised - Still accepting donations (concludes 1st Roza)
+            </span>
+        `;
+        document.getElementById('hero-badge-p1').innerHTML = badgeHTML;
+    } else {
+        document.getElementById('hero-badge-p1').style.display = 'none';
+    }
     const deadline = new Date(config.hero.deadline).getTime();
 
     function updateCountdown() {
@@ -65,6 +86,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2 class="phase-title">${phase.title}</h2>
                 <p class="phase-goal">${phase.goalDescription}</p>
         `;
+
+        // Inject Progress Bar if raised & goalAmount exist
+        if (phase.raised !== undefined && phase.goalAmount) {
+            const percentage = Math.min((phase.raised / phase.goalAmount) * 100, 100);
+            const remaining = phase.goalAmount - phase.raised;
+
+            headerHTML += `
+                <div class="progress-container" style="margin: 1.5rem auto; max-width: 600px; padding: 1rem;">
+                    <div class="progress-bar-bg" style="background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1);">
+                        <div class="progress-bar-fill" style="width: ${percentage}%; background-color: var(--primary-color);"></div>
+                    </div>
+                    <div class="progress-stats" style="font-size: 0.9rem; color: #555;">
+                        <span>Rs. ${phase.raised.toLocaleString()} raised</span>
+                        <span>of Rs. ${phase.goalAmount.toLocaleString()}</span>
+                    </div>
+                    <div class="remaining" style="font-size: 0.85rem; margin-top: 0.2rem; color: var(--accent-color);">
+                        Rs. ${remaining.toLocaleString()} Remaining
+                    </div>
+                </div>
+            `;
+        }
+
 
         if (phase.label) {
             headerHTML += `<p style="margin-top:0.5rem; color: #666; font-style: italic;">${phase.label}</p>`;
