@@ -6,9 +6,9 @@ const config = {
     },
     hero: {
         headline: "Help Us Host an Iftar for Orphans – Rs. 500 Per Meal",
-        subheadline: "We have {days} days to raise Rs. 50,000. Already raised Rs. 1,000. Join us in spreading kindness this Ramadan.",
+        subheadline: "We have {days} days to raise Rs. 50,000. Already raised Rs. 6,700. Join us in spreading kindness this Ramadan.",
         target: 50000,
-        raised: 1000,
+        raised: 6700,
         currencySymbol: "Rs.",
         deadline: "2026-03-06T23:59:59" // 15 days from Feb 17th
     },
