@@ -24,28 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('remaining-amount').textContent = `${formatCurrency(remaining)} Remaining`;
 
-    /* ------------------------------------------------------------- 
-       HERO BADGE (Phase 1 Progress) 
-       "Still accepting donations for phase one (conclude on 1st roza)"
-    ------------------------------------------------------------- */
-    const phase1 = config.phases.find(p => p.id === 'phase1');
-    if (phase1 && phase1.raised !== undefined) {
-        const p1Target = phase1.goalAmount;
-        const p1Raised = phase1.raised;
-        const p1Percent = Math.min((p1Raised / p1Target) * 100, 100);
-
-        const badgeHTML = `
-            <div class="mini-progress-bar">
-                <div class="mini-progress-fill" style="width: ${p1Percent}%"></div>
-            </div>
-            <span class="badge-text" style="font-size: 0.8rem;">
-                Phase 1: ${Math.round(p1Percent)}% Raised - Still accepting donations (concludes 1st Roza)
-            </span>
-        `;
-        document.getElementById('hero-badge-p1').innerHTML = badgeHTML;
-    } else {
-        document.getElementById('hero-badge-p1').style.display = 'none';
-    }
+    /* Hero Badge Logic simplified - Phase 1 is now in announcement bar */
     const deadline = new Date(config.hero.deadline).getTime();
 
     function updateCountdown() {
@@ -66,6 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('hours').textContent = String(hours).padStart(2, '0');
         document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
         document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        let dynamicSubheadline = config.hero.subheadline.replace('{days}', Math.max(0, days));
+        document.getElementById('hero-subheadline').textContent = dynamicSubheadline;
+
+        config.phases.forEach(phase => {
+            if (phase.label && phase.label.includes('{days}')) {
+                let el = document.getElementById(`phase-label-${phase.id}`);
+                if (el) {
+                    el.textContent = phase.label.replace('{days}', Math.max(0, days));
+                }
+            }
+        });
     }
 
     setInterval(updateCountdown, 1000);
@@ -78,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     config.phases.forEach(phase => {
         const section = document.createElement('section');
-        section.className = 'phase-section';
+        section.className = 'phase-section fade-in';
         if (phase.id) section.id = phase.id;
 
         let headerHTML = `
@@ -87,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="phase-goal">${phase.goalDescription}</p>
         `;
 
-        // Inject Progress Bar if raised & goalAmount exist
-        if (phase.raised !== undefined && phase.goalAmount) {
+        // Inject Progress Bar if raised & goalAmount exist (except for Phase 1 which is concluded)
+        if (phase.id !== 'phase1' && phase.raised !== undefined && phase.goalAmount) {
             const percentage = Math.min((phase.raised / phase.goalAmount) * 100, 100);
             const remaining = phase.goalAmount - phase.raised;
 
@@ -110,7 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         if (phase.label) {
-            headerHTML += `<p style="margin-top:0.5rem; color: #666; font-style: italic;">${phase.label}</p>`;
+            let labelText = phase.label;
+            if (labelText.includes('{days}')) {
+                const distance = deadline - new Date().getTime();
+                const initDays = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
+                labelText = labelText.replace('{days}', initDays);
+            }
+            headerHTML += `<p id="phase-label-${phase.id}" style="margin-top:0.5rem; color: #666; font-style: italic;">${labelText}</p>`;
         }
 
         if (phase.quote) {
@@ -132,7 +129,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         itemsHTML += `</div>`;
 
-        section.innerHTML = headerHTML + itemsHTML;
+        let galleryHTML = '';
+        if (phase.gallery && phase.gallery.length > 0) {
+            galleryHTML = `<div class="phase-gallery">`;
+            phase.gallery.forEach(media => {
+                if (media.type === 'video') {
+                    galleryHTML += `
+                        <div class="gallery-item video-item">
+                            <video controls poster="${media.poster}">
+                                <source src="${media.url}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    `;
+                } else if (media.type === 'image') {
+                    galleryHTML += `
+                        <div class="gallery-item image-item">
+                            <img src="${media.url}" alt="Phase Visual" loading="lazy">
+                        </div>
+                    `;
+                } else if (media.type === 'embed') {
+                    galleryHTML += `
+                        <div class="gallery-item embed-item" style="display:flex; justify-content:center; width:100%;">
+                            ${media.html}
+                        </div>
+                    `;
+                }
+            });
+            galleryHTML += `</div>`;
+        }
+
+        section.innerHTML = headerHTML + galleryHTML + itemsHTML;
         phasesContainer.appendChild(section);
     });
 
@@ -178,20 +205,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (config.meta && config.meta.ramadanStartDate) {
-        const today = new Date();
-        const ramadanStart = new Date(config.meta.ramadanStartDate);
-        today.setHours(0, 0, 0, 0);
-        ramadanStart.setHours(0, 0, 0, 0);
-        if (today >= ramadanStart) {
-            const tagline = document.querySelector('.tagline');
-            if (tagline) {
-                tagline.textContent = "Ramadan Mubarak! " + config.meta.tagline;
-                tagline.style.color = "var(--secondary-color)";
-                tagline.style.fontWeight = "bold";
-            }
-        }
+    /* ------------------------------------------------------------- 
+       RECENT DONATIONS TICKER
+    ------------------------------------------------------------- */
+    const tickerContainer = document.getElementById('donation-ticker');
+    if (config.recentDonations && config.recentDonations.length > 0) {
+        let itemsHTML = '';
+        config.recentDonations.forEach(donation => {
+            itemsHTML += `<div class="ticker__item"><strong>&bull;</strong> ${donation.text}</div>`;
+        });
+        // Duplicate the list dynamically to ensure it's wide enough for max-content scroll
+        tickerContainer.innerHTML = `
+            <div class="ticker__content">${itemsHTML}</div>
+            <div class="ticker__content">${itemsHTML}</div>
+            <div class="ticker__content">${itemsHTML}</div>
+            <div class="ticker__content">${itemsHTML}</div>
+        `;
     }
+
+    /* ------------------------------------------------------------- 
+       SCROLL ANIMATIONS (IntersectionObserver)
+    ------------------------------------------------------------- */
+    const faders = document.querySelectorAll('.fade-in');
+
+    const appearOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                return;
+            } else {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+    });
+
+    /* Ramadan start logic removed as we now have a fixed Ramadan Mubarak heading */
 });
 
 /* ------------------------------------------------------------- 
@@ -295,12 +352,141 @@ window.nextStep = function (stepNum) {
         alert("Please select at least one item to donate.");
         return;
     }
+
+    // Trigger confetti animation when proceeding to payment
+    if (stepNum === 3 && typeof confetti !== 'undefined') {
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 3000 };
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function () {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            confetti({
+                ...defaults, particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+            });
+            confetti({
+                ...defaults, particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+            });
+        }, 250);
+    }
+
     showStep(stepNum);
+};
+
+window.processPayment = function (btn) {
+    btn.textContent = "Processing...";
+    btn.disabled = true;
+
+    // Simulate network delay for effect
+    setTimeout(() => {
+        btn.textContent = "Proceed to Pay (Mock)";
+        btn.disabled = false;
+
+        // Trigger confetti
+        if (typeof confetti !== 'undefined') {
+            const duration = 3 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 3000 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function () {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            }, 250);
+        }
+
+        // Setup WhatsApp link for final step
+        const waNumber = config.bankDetails.mobilePayment.split(' ')[0].replace(/^0/, '92');
+        const waLink = `https://wa.me/${waNumber}?text=Assalam-o-Alaikum, I have donated Rs. ${currentDonation.amount.toLocaleString()} for the following items: ${currentDonation.items.join(', ')}. Here is my receipt.`;
+        document.getElementById('whatsapp-link-final').href = waLink;
+
+        // Move to Step 4 and initialize scratch card
+        showStep(4);
+        initScratchCard();
+    }, 800);
 };
 
 window.prevStep = function (stepNum) {
     showStep(stepNum);
 };
+
+// Scratch Card Logic
+function initScratchCard() {
+    const canvas = document.getElementById('scratch-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('scratch-container');
+
+    // Set canvas resolution to container size
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+
+    // Fill canvas with silver "foil"
+    ctx.fillStyle = '#C0C0C0';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Add text over foil
+    ctx.font = "bold 22px Inter, sans-serif";
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Scratch Here!", canvas.width / 2, canvas.height / 2);
+
+    let isDrawing = false;
+
+    function getMousePos(e) {
+        const rect = canvas.getBoundingClientRect();
+        // Handle touch and mouse events
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+        };
+    }
+
+    function scratch(e) {
+        if (!isDrawing) return;
+        e.preventDefault(); // Prevent scrolling on touch devices
+        const pos = getMousePos(e);
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 25, 0, 2 * Math.PI); // 25px brush size
+        ctx.fill();
+    }
+
+    // Mouse Events
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('mouseup', () => { isDrawing = false; });
+    canvas.addEventListener('mouseleave', () => { isDrawing = false; });
+
+    // Touch Events (for mobile)
+    canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, { passive: false });
+    canvas.addEventListener('touchmove', scratch, { passive: false });
+    canvas.addEventListener('touchend', () => { isDrawing = false; });
+}
 
 // Close modal on outside click
 window.onclick = function (event) {
@@ -345,3 +531,28 @@ function showToast(message) {
     document.body.appendChild(div);
     setTimeout(() => div.remove(), 2000);
 }
+
+/* ------------------------------------------------------------- 
+   HABIT VISUALIZER LOGIC
+------------------------------------------------------------- */
+document.getElementById('label-dunya').classList.add('active');
+
+window.toggleHabitView = function () {
+    const isChecked = document.getElementById('habit-toggle').checked;
+    const viewDunya = document.getElementById('view-dunya');
+    const viewAkhirah = document.getElementById('view-akhirah');
+    const labelDunya = document.getElementById('label-dunya');
+    const labelAkhirah = document.getElementById('label-akhirah');
+
+    if (isChecked) {
+        viewDunya.classList.remove('active');
+        viewAkhirah.classList.add('active');
+        labelDunya.classList.remove('active');
+        labelAkhirah.classList.add('active');
+    } else {
+        viewAkhirah.classList.remove('active');
+        viewDunya.classList.add('active');
+        labelAkhirah.classList.remove('active');
+        labelDunya.classList.add('active');
+    }
+};

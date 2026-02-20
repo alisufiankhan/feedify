@@ -257,6 +257,147 @@ body {
     }
 }
 
+/* ===========================
+   Habit Visualizer
+   =========================== */
+.habit-visualizer {
+    background: #fdfaf6;
+    padding: 4rem 0;
+    margin-bottom: 2rem;
+    border-top: 1px solid #f0e6d2;
+    border-bottom: 1px solid #f0e6d2;
+}
+
+.habit-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 2rem;
+}
+
+.habit-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    transition: color 0.3s;
+}
+
+#label-dunya.active {
+    color: #555;
+}
+
+#label-akhirah.active {
+    color: var(--primary-color);
+}
+
+/* The Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: var(--secondary-color);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.habit-cards-wrapper {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 250px;
+}
+
+.habit-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+}
+
+.habit-card.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#view-dunya {
+    border-color: #eee;
+}
+
+#view-akhirah {
+    border-color: var(--secondary-color);
+    background: #fffcf0;
+}
+
+.habit-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.habit-card h3 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.habit-card p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
 /* Phases */
 #phases-container {
     padding: 4rem 20px;
@@ -789,6 +930,58 @@ body {
     text-align: center;
 }
 
+/* Scratch Card */
+.scratch-container {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    margin: 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.scratch-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    text-align: center;
+    background: #fffcf0;
+    border: 2px dashed var(--secondary-color);
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.scratch-message h3 {
+    color: var(--primary-color);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+}
+
+.scratch-message p {
+    color: #555;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
+#scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: crosshair;
+}
+
 /* Step 1: Phase Select */
 .phase-btn {
     display: block;
@@ -895,4 +1088,193 @@ body {
 
 .copy-btn:hover {
     background: #ddd;
+}
+
+/* Top Announcement Bar */
+.announcement-bar {
+    background-color: var(--secondary-color);
+    color: #333;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    z-index: 1100;
+    position: relative;
+}
+
+.ramadan-mubarak-heading {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero h2#hero-headline {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+    .ramadan-mubarak-heading {
+        font-size: 2.8rem;
+    }
+
+    .hero h2#hero-headline {
+        font-size: 1.8rem;
+    }
+}
+
+/* Phase Gallery */
+.phase-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.gallery-item {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #000;
+}
+
+/* Make video take up the left column full height */
+.video-item {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    aspect-ratio: 9/16;
+}
+
+.video-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Make images stack on the right column */
+.image-item {
+    aspect-ratio: 1/1;
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.image-item:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .phase-gallery {
+        grid-template-columns: 1fr;
+        /* Stack vertically on small screens */
+    }
+
+    .video-item {
+        grid-column: auto;
+        grid-row: auto;
+        aspect-ratio: 9/16;
+        max-height: 500px;
+    }
+}
+
+/* ===========================
+   Scroll Animations
+   =========================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===========================
+   Social Proof Ticker
+   =========================== */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--secondary-color);
+    padding: 10px 0;
+    box-sizing: border-box;
+    border-bottom: 2px solid #d4b500;
+}
+
+.ticker {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    animation: ticker 30s linear infinite;
+}
+
+.ticker:hover {
+    animation-play-state: paused;
+}
+
+.ticker__content {
+    display: flex;
+}
+
+.ticker__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 2rem;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.ticker__item strong {
+    color: var(--primary-color);
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ===========================
+   Sticky Mobile Bottom Bar
+   =========================== */
+.mobile-sticky-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 10px 15px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+@media (max-width: 768px) {
+    .mobile-sticky-bar {
+        display: block;
+    }
+
+    /* Ensure body has bottom padding so footer isn't hidden by sticky bar */
+    body {
+        padding-bottom: 70px;
+    }
 }

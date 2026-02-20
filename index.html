@@ -15,6 +15,11 @@
 
 <body>
 
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Phase 1 concluded for this Ramadan – you can donate for iftaar drives or orphans iftaar.
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -26,15 +31,12 @@
     <!-- Hero Section -->
     <header class="hero">
         <div class="container hero-content">
+            <h1 class="ramadan-mubarak-heading">Ramadan Mubarak</h1>
             <p class="tagline">Feeding Hope, Spreading Kindness.</p>
             <div class="hero-badges">
-                <div class="badge-progress" id="hero-badge-p1">
-                    <!-- Injected via JS -->
-                    <span>Loading Phase 1...</span>
-                </div>
                 <span class="badge-phase">Phase 2</span>
             </div>
-            <h1 id="hero-headline">This Ramadan, Let’s Feed 9 Families in 2 Days</h1>
+            <h2 id="hero-headline">This Ramadan, Let’s Feed 9 Families in 2 Days</h2>
             <p class="hero-sub" id="hero-subheadline">Loading data...</p>
 
             <div class="progress-container">
@@ -59,13 +61,56 @@
         </div>
     </header>
 
+    <!-- Social Proof Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker" id="donation-ticker">
+            <!-- Injected via script.js -->
+        </div>
+    </div>
+
+    <!-- The Cost of Giving - Habit Visualizer -->
+    <section class="habit-visualizer fade-in">
+        <div class="container" style="text-align: center;">
+            <h2
+                style="font-family: var(--font-heading); color: var(--primary-color); font-size: 2rem; margin-bottom: 2rem;">
+                The True Value of Rs. 500</h2>
+
+            <div class="habit-toggle-container">
+                <span class="habit-label" id="label-dunya">In This World</span>
+                <label class="switch">
+                    <input type="checkbox" id="habit-toggle" onchange="toggleHabitView()">
+                    <span class="slider round"></span>
+                </label>
+                <span class="habit-label" id="label-akhirah">In the Hereafter</span>
+            </div>
+
+            <div class="habit-cards-wrapper">
+                <!-- View 1: Dunya (Habit) -->
+                <div class="habit-card active" id="view-dunya">
+                    <div class="habit-icon">☕</div>
+                    <h3>1 Iced Coffee</h3>
+                    <p>Lasts for 15 minutes.</p>
+                </div>
+
+                <!-- View 2: Akhirah (Reward) -->
+                <div class="habit-card" id="view-akhirah">
+                    <div class="habit-icon">🍲</div>
+                    <h3>1 Full Iftar Meal</h3>
+                    <p>Feeds a fasting person. Eternal reward.</p>
+                    <button class="cta-btn pulse" style="margin-top: 1rem; padding: 0.5rem 1.5rem; font-size: 1rem;"
+                        onclick="scrollToDonate()">Donate Rs. 500</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Phases Container -->
     <main class="container" id="phases-container">
         <!-- Content injected via script.js -->
     </main>
 
     <!-- Social Proof -->
-    <section class="social-proof">
+    <section class="social-proof fade-in">
         <div class="container">
             <div class="stats-grid" id="social-proof-grid">
                 <!-- Injected via script.js -->
@@ -75,7 +120,7 @@
     </section>
 
     <!-- Transparency -->
-    <section class="transparency">
+    <section class="transparency fade-in">
         <div class="container">
             <h2>Transparency & Trust</h2>
             <p id="transparency-text">Loading...</p>
@@ -86,7 +131,7 @@
     </section>
 
     <!-- Bank Details Section -->
-    <section class="bank-section" id="bank-details-section">
+    <section class="bank-section fade-in" id="bank-details-section">
         <div class="container">
             <h2>Direct Bank Transfer</h2>
             <p>You can transfer donations directly to the following account:</p>
@@ -204,7 +249,7 @@
                 </div>
                 <div class="modal-actions">
                     <button class="btn-secondary" onclick="prevStep(1)">Back</button>
-                    <button class="btn-primary" onclick="nextStep(3)">Proceed to Pay</button>
+                    <button class="btn-primary" onclick="nextStep(3)">See Payment Details</button>
                 </div>
             </div>
 
@@ -244,7 +289,27 @@
 
                 <div class="modal-actions">
                     <button class="btn-secondary" onclick="prevStep(2)">Back</button>
+                    <button class="btn-primary" onclick="processPayment(this)">Proceed to Pay (Mock)</button>
                     <button class="btn-secondary" onclick="closeDonateModal()">Close</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Scratch-to-Reveal Thank You -->
+            <div class="modal-step" id="step-4" style="text-align: center;">
+                <h2 class="step-title">Jazakallah Hu Khairan!</h2>
+                <p>Scratch the card below to reveal a special message.</p>
+                <div class="scratch-container" id="scratch-container">
+                    <div class="scratch-message">
+                        <h3>Thank You!</h3>
+                        <p>Your kindness just brought a smile to an orphan's face.</p>
+                        <span style="font-size: 3rem;">❤️</span>
+                    </div>
+                    <canvas id="scratch-canvas"></canvas>
+                </div>
+                <div class="modal-actions" style="margin-top: 2rem;">
+                    <a href="#" id="whatsapp-link-final" target="_blank" class="cta-btn"
+                        style="text-decoration: none; font-size: 1rem;">Share Receipt on WhatsApp</a>
+                    <button class="btn-secondary" style="margin-top:10px;" onclick="closeDonateModal()">Close</button>
                 </div>
             </div>
 
@@ -260,8 +325,13 @@
         </div>
     </footer>
 
+    <!-- Mobile Sticky Donate Bar -->
+    <div class="mobile-sticky-bar">
+        <button class="cta-btn pulse" style="width: 100%; border-radius: 8px;" onclick="scrollToDonate()">Donate
+            Now</button>
+    </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
