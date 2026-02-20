@@ -79,9 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         // Inject Progress Bar if raised & goalAmount exist (except for Phase 1 which is concluded)
-        if (phase.id !== 'phase1' && phase.raised !== undefined && phase.goalAmount) {
-            const percentage = Math.min((phase.raised / phase.goalAmount) * 100, 100);
-            const remaining = phase.goalAmount - phase.raised;
+        let phaseRaised = phase.raised;
+        let phaseGoalAmount = phase.goalAmount;
+
+        if (phase.id === 'phase2') {
+            phaseRaised = config.hero.raised;
+            phaseGoalAmount = config.hero.target;
+        }
+
+        if (phase.id !== 'phase1' && phaseRaised !== undefined && phaseGoalAmount) {
+            const percentage = Math.min((phaseRaised / phaseGoalAmount) * 100, 100);
+            const remaining = phaseGoalAmount - phaseRaised;
 
             headerHTML += `
                 <div class="progress-container" style="margin: 1.5rem auto; max-width: 600px; padding: 1rem;">
@@ -89,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="progress-bar-fill" style="width: ${percentage}%; background-color: var(--primary-color);"></div>
                     </div>
                     <div class="progress-stats" style="font-size: 0.9rem; color: #555;">
-                        <span>Rs. ${phase.raised.toLocaleString()} raised</span>
-                        <span>of Rs. ${phase.goalAmount.toLocaleString()}</span>
+                        <span>Rs. ${phaseRaised.toLocaleString()} raised</span>
+                        <span>of Rs. ${phaseGoalAmount.toLocaleString()}</span>
                     </div>
                     <div class="remaining" style="font-size: 0.85rem; margin-top: 0.2rem; color: var(--accent-color);">
                         Rs. ${remaining.toLocaleString()} Remaining

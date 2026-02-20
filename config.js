@@ -85,7 +85,7 @@ const config = {
         { text: "A brother donated 1,000 for Orphan's iftaar" },
         { text: "Someone donated 3,000 for Orphan's iftaar" },
         { text: "A sister just donated Rs. 1,000" },
-        { text: "A sister (Shamail-e-Mrriam) just donated Rs. 2,000" }
+        { text: "A sister just donated Rs. 2,000" }
     ]
 };
 
