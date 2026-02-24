@@ -64,7 +64,7 @@ const config = {
         }
     ],
     socialProof: {
-        stat1: "57,500 Already Raised",
+        stat1: "7 lac raised in previous 2 years",
         stat2: "1000+ Boxes Distributed in previous 2 Ramadans",
         stat3: "Community Powered Initiative",
         testimonial: "Ramadan is about feeling for others."

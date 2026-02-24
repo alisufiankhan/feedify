@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (media.type === 'video') {
                     galleryHTML += `
                         <div class="gallery-item video-item">
-                            <video controls poster="${media.poster}">
+                            <video controls muted playsinline loop poster="${media.poster}">
                                 <source src="${media.url}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -204,7 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // WhatsApp Link (clean logic)
         const waNumber = config.bankDetails.mobilePayment.split(' ')[0].replace(/^0/, '92');
         const waLink = `https://wa.me/${waNumber}?text=Assalam-o-Alaikum, I want to share receipt for donation.`;
-        document.getElementById('whatsapp-link').href = waLink;
+        const waLinkEl = document.getElementById('whatsapp-link');
+        if (waLinkEl) waLinkEl.href = waLink;
 
         // Floating Widget Link
         const floatBtn = document.getElementById('floating-whatsapp');
@@ -254,6 +255,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     faders.forEach(fader => {
         appearOnScroll.observe(fader);
+    });
+
+    /* ------------------------------------------------------------- 
+       VIDEO AUTO-PLAY ON SCROLL
+    ------------------------------------------------------------- */
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.play().catch(e => console.log("Autoplay prevented by browser:", e));
+            } else {
+                entry.target.pause();
+            }
+        });
+    }, { threshold: 0.5 }); // Play when 50% of the video is in view
+
+    // Select all videos that were dynamically added to the phases-container
+    const videos = document.querySelectorAll('#phases-container video');
+    videos.forEach(video => {
+        videoObserver.observe(video);
     });
 
     /* Ramadan start logic removed as we now have a fixed Ramadan Mubarak heading */
@@ -399,7 +419,7 @@ window.processPayment = function (btn) {
 
     // Simulate network delay for effect
     setTimeout(() => {
-        btn.textContent = "Proceed to Pay (Mock)";
+        btn.textContent = "I just paid";
         btn.disabled = false;
 
         // Trigger confetti
